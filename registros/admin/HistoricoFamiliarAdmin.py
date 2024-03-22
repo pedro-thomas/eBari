@@ -1,12 +1,12 @@
 from django.contrib import admin
-from models.HistoricoFamiliar import HistoricoFamiliar
+from registros.models import HistoricoFamiliar
 
 @admin.register(HistoricoFamiliar)
 class HistoricoFamiliarAdmin(admin.ModelAdmin):
-    search_fields = (
-        'name',
-    )
+    search_fields = [
+        'patient',
+    ]
 
-    list_display = (
-        'name',
-    )
+    list_display = [
+        'patient',
+    ]

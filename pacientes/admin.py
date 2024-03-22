@@ -1,10 +1,10 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+from pacientes.models import Paciente, Contato
+
 # from evolutions.models import Evolution
 # from nutritional_consultations.models import NutritionalConsultation
-from import_export.admin import ImportExportModelAdmin
-# from registers.models import HistoricoFamiliar
-from .models import Paciente, Contato
-from django.contrib import admin
+# from registros.models import HistoricoFamiliar
 
 
 class ContatoInline(admin.TabularInline):
@@ -16,7 +16,8 @@ class ContatoInline(admin.TabularInline):
 #     extra = 0
 
 @admin.register(Paciente)
-class PacienteAdmin(ImportExportModelAdmin):
+class PacienteAdmin(admin.ModelAdmin):
+    icon_name = 'assignment_ind'
 
     search_fields = (
         'full_name',
@@ -41,10 +42,10 @@ class PacienteAdmin(ImportExportModelAdmin):
         'gender',
     )
 
-    inlines = (
+    inlines = [
         # HistoricoFamiliarInline,
         ContatoInline
-    )
+    ]
 
     def age(self, obj):
         return obj.age() 

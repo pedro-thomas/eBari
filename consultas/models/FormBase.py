@@ -1,8 +1,8 @@
 from django.db import models
 from pacientes.models import Paciente
-from consultas.models.Consultas import Consulta
+from consultas.models.Consultas import Consultas
 from multiselectfield import MultiSelectField
-from registers.models import ComorbiditieType, GastProblem, Medicine, Doctor, Technique, CurrentPathology
+from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
@@ -10,7 +10,7 @@ SIM_NAO_CHOICES = (
 )
 
 class FormBase(models.Model):
-    consulta = models.OneToOneField(Consulta, on_delete=models.CASCADE, related_name='form_base')
+    consulta = models.OneToOneField(Consultas, on_delete=models.CASCADE, related_name='form_base')
 
     MEAL_PLACE_CHOICES = (
         ('Casa', 'Casa'),

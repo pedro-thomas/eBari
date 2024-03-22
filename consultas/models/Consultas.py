@@ -1,14 +1,14 @@
 from django.db import models
 from pacientes.models import Paciente
 from multiselectfield import MultiSelectField
-from registers.models import ComorbiditieType, GastProblem, Medicine, Doctor, Technique, CurrentPathology
+from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
     (False, 'Não'),
 )
 
-class Consulta(models.Model):
+class Consultas(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, verbose_name="Paciente")
     date = models.DateField(verbose_name="Data da Consulta")
     type = models.CharField(max_length=20, choices=(('pre_op', 'PreOp'), ('pos_op', 'PosOp')), verbose_name="Tipo")

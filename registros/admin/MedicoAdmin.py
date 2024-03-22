@@ -1,8 +1,8 @@
 from django.contrib import admin
-from models.Medicos import Medicos
+from registros.models import Medico
 
-@admin.register(Medicos)
-class MedicosAdmin(admin.ModelAdmin):
+@admin.register(Medico)
+class MedicoAdmin(admin.ModelAdmin):
     search_fields = (
         'name',
     )

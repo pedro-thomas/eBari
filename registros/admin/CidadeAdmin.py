@@ -1,12 +1,12 @@
 from django.contrib import admin
-from models.Cidade import Cidade
+from registros.models import Cidade
 
 @admin.register(Cidade)
 class CidadeAdmin(admin.ModelAdmin):
     search_fields = (
-        'name',
+        'name','state'
     )
 
     list_display = (
-        'name',
+        'name','state'
     )

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models.ProblemasGastricos import ProblemasGastricos
+from registros.models import ProblemasGastricos
 
 @admin.register(ProblemasGastricos)
 class ProblemasGastricosAdmin(admin.ModelAdmin):

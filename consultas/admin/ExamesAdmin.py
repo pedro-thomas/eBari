@@ -1,7 +1,6 @@
 from django.contrib import admin
-from models.Exames import Exame
+from consultas.models import Exames
 
-class ExameAdmin(admin.ModelAdmin):
-    list_display = ["consultation"]
-
-admin.site.register(Exame, ExameAdmin)
+admin.site.register(Exames)
+class ExamesAdmin(admin.ModelAdmin):
+    list_display = ["consulta"]

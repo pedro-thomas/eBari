@@ -1,8 +1,11 @@
+from typing import Any
 from django.db import models
 from pacientes.models import Paciente
 from multiselectfield import MultiSelectField
+from multiselectfield.utils import get_max_length
+
 from consultas.models import Consultas
-from registers.models import ComorbiditieType, GastProblem, Medicine, Doctor, Technique, CurrentPathology
+from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
@@ -39,7 +42,7 @@ class PosOperatorio(models.Model):
     )
 
     doctors_name = models.ForeignKey(
-        Doctor,
+        Medico,
         on_delete=models.CASCADE,
         blank=False,
         null= False,
@@ -47,7 +50,7 @@ class PosOperatorio(models.Model):
     )
 
     surgery_technique = models.ForeignKey(
-        Technique, on_delete=models.CASCADE, 
+        TecnicaCirurgica, on_delete=models.CASCADE, 
         blank=False,
         null= False,
         verbose_name="Técninca ultilizada na cirurgia",
@@ -98,7 +101,7 @@ class PosOperatorio(models.Model):
     )
     
     med_use = models.ManyToManyField(
-        Medicine,
+        Remedio,
         verbose_name="Qual medicamento consome atualmente",
     )
 
@@ -145,7 +148,7 @@ class PosOperatorio(models.Model):
     )
 
     current_comorbidities = models.ManyToManyField(
-        ComorbiditieType,
+        Comorbidade,
         verbose_name="Comorbidades atuais",
         blank = False,
     )
@@ -163,7 +166,7 @@ class PosOperatorio(models.Model):
     )
 
     current_pathology = models.ManyToManyField(
-        CurrentPathology,
+        Patologia,
         blank=False, verbose_name="Patologias atuais",
     )
 
@@ -246,10 +249,11 @@ class PreOperatorio(models.Model):
         ('5', '5 - Coaching'),
         ('6', '6 - Outros'),
     )
-
+    
     diet_orientation = MultiSelectField(
-            choices= DIET_ORIENTATION_CHOICES,
             verbose_name="Quem orientou a dieta?",
+            choices=DIET_ORIENTATION_CHOICES,
+            max_length=get_max_length(DIET_ORIENTATION_CHOICES, None),
             blank=True,
     )  
 
@@ -281,18 +285,18 @@ class PreOperatorio(models.Model):
     )
     
     comorbidities_type = models.ManyToManyField(
-        ComorbiditieType,
+        Comorbidade,
         verbose_name="Comorbidades",
         blank = False,
     )
 
     stomach_problems = models.ManyToManyField(
-        GastProblem,
+        ProblemasGastricos,
         blank=False,
         verbose_name="Problemas gastrointestinais",
     )
     med_consumption = models.ManyToManyField(
-        Medicine,
+        Remedio,
         blank = False, 
         verbose_name="Consome medicamentos",
     )
@@ -358,3 +362,8 @@ class PreOperatorio(models.Model):
 
     def __str__(self):
         return f"Detalhes Pré-Op para {self.consulta}"
+    
+    # def __init__(self, *args: Any, **kwargs: Any) -> None:
+    #     self.validators[0] = MaxValueMultiFieldValidator(self.max_length)
+
+    #     super().__init__(*args, **kwargs)

@@ -1,5 +1,7 @@
 from django.db import models
-from ...pacientes.models import Paciente
+
+from pacientes.models import Paciente
+
 from multiselectfield import MultiSelectField
 
 SIM_NAO_CHOICES = (
@@ -8,7 +10,7 @@ SIM_NAO_CHOICES = (
 )
 
 class HistoricoFamiliar(models.Model):
-    patient = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    patient = models.ForeignKey('pacientes.Paciente', verbose_name="Paciente", on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

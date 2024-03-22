@@ -1,5 +1,5 @@
 from django.db import models
-from ...pacientes.models import Paciente
+from pacientes.models import Paciente
 from multiselectfield import MultiSelectField
 
 SIM_NAO_CHOICES = (
@@ -7,12 +7,12 @@ SIM_NAO_CHOICES = (
     (False, 'Não'),
 )
 
-class Comorbidade(models.Model):
+class Medico(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nome")
 
     class Meta:
-        verbose_name = "Tipo de comorbidade"
-        verbose_name_plural = "Tipos de comorbidades"
+        verbose_name = "Médico"
+        verbose_name_plural = "Médicos"
 
     def __str__(self) -> str:
         return f"{self.name}"

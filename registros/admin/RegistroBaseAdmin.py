@@ -1,12 +1,12 @@
 from django.contrib import admin
-from models.RegistroBase import RegistroBase
+from registros.models import RegistroBase
 
 @admin.register(RegistroBase)
 class RegistroBaseAdmin(admin.ModelAdmin):
-    search_fields = (
-        'name',
-    )
+    search_fields = [
+        'type',
+    ]
 
-    list_display = (
-        'name',
-    )
+    list_display = [
+        'type',
+    ]

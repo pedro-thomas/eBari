@@ -1,15 +1,15 @@
 from django.db import models
 from pacientes.models import Paciente
 from multiselectfield import MultiSelectField
-from consultas.models.Consultas import Consulta
+from consultas.models.Consultas import Consultas
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
     (False, 'Não'),
 )
 
-class Exame(models.Model):
-    consulta = models.OneToOneField(Consulta, on_delete=models.CASCADE, related_name='exams')
+class Exames(models.Model):
+    consulta = models.OneToOneField(Consultas, on_delete=models.CASCADE, related_name='exams')
     has_exam = models.BooleanField(default=False)
 
     hemoglobina = models.CharField(max_length=20, blank=True)

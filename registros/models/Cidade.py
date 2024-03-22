@@ -1,5 +1,4 @@
 from django.db import models
-from ...pacientes.models import Paciente
 from multiselectfield import MultiSelectField
 
 SIM_NAO_CHOICES = (

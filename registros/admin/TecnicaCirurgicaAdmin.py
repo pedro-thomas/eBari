@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models.TecnicaCirurgica import TecnicaCirurgica
+from registros.models import TecnicaCirurgica
 
 @admin.register(TecnicaCirurgica)
 class TecnicaCirurgicaAdmin(admin.ModelAdmin):
