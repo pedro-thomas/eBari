@@ -3,10 +3,6 @@ from registros.models import Comorbidade
 
 @admin.register(Comorbidade)
 class ComorbidadesAdmin(admin.ModelAdmin):
-    search_fields = (
-        'name',
-    )
-
-    list_display = (
-        'name',
-    )
+    search_fields = ('name',)
+    list_display = ('name',)
+    icon_name = 'sentiment_dissatisfied'

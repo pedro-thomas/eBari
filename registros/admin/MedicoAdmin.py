@@ -3,10 +3,6 @@ from registros.models import Medico
 
 @admin.register(Medico)
 class MedicoAdmin(admin.ModelAdmin):
-    search_fields = (
-        'name',
-    )
-
-    list_display = (
-        'name',
-    )
+    search_fields = ('name',)
+    list_display = ('name',)
+    icon_name='assignment_ind'

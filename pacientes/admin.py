@@ -17,7 +17,7 @@ class ContatoInline(admin.TabularInline):
 
 @admin.register(Paciente)
 class PacienteAdmin(admin.ModelAdmin):
-    icon_name = 'assignment_ind'
+    icon_name = 'account_box'
 
     search_fields = (
         'full_name',
