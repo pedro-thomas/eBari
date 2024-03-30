@@ -35,3 +35,7 @@ class Exames(models.Model):
     vitamina_B9 = models.CharField(max_length=20, blank=True)
     hemoglobina_glicada = models.CharField(max_length=20, blank=True)
     homa_ir = models.CharField(max_length=20, blank=True)
+
+    class Meta:
+        verbose_name = 'Exame'
+        verbose_name_plural = 'Exames'

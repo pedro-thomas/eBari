@@ -213,6 +213,10 @@ class PosOperatorio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = 'Pós-Operatório'
+        verbose_name_plural = 'Pós-Operatórios'
+
     def __str__(self):
         return f"Detalhes Pós-Op para {self.consulta}"
     
@@ -359,6 +363,10 @@ class PreOperatorio(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Pré-Operatório'
+        verbose_name_plural = 'Pré-Operatórios'
 
     def __str__(self):
         return f"Detalhes Pré-Op para {self.consulta}"

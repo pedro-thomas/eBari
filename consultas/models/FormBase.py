@@ -517,8 +517,9 @@ class FormBase(models.Model):
         blank=False,
     )
 
-    def __str__(self) -> str:
-        return f"{self.paciente.full_name} - {sPacienteated_at}"
+    class Meta:
+        verbose_name = 'Formulário Base'
+        verbose_name_plural = 'Formulários Bases'
 
     def __str__(self):
         return f"Consulta de {self.paciente.full_name} em {Pacientete}"

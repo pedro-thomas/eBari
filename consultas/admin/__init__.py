@@ -1,0 +1,4 @@
+from consultas.admin.ConsultasAdmin import ConsultasAdmin
+from consultas.admin.ExamesAdmin import ExamesAdmin
+from consultas.admin.FormBaseAdmin import FormBaseAdmin
+from consultas.admin.FormOperatorioAdmin import PreOperatorioAdmin, PosOperatorioAdmin

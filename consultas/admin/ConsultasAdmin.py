@@ -1,7 +1,7 @@
 from django.contrib import admin
-from models.Consultas import Consulta
-from models.FormOperatorio import PosOperatorio, PreOperatorio
-from models.Exames import Exame
+from consultas.models import Consultas
+from consultas.models import PosOperatorio, PreOperatorio
+from consultas.models import Exames
 
 class PreOperatorioInline(admin.StackedInline):
     model = PreOperatorio
@@ -12,16 +12,17 @@ class PosOperatorioInline(admin.StackedInline):
     extra = 0
 
 class ExameInline(admin.StackedInline):
-    model = Exame
+    model = Exames
     extra = 0
 
 class ConsultasAdmin(admin.ModelAdmin):
-    list_display = ["patient", "date", "type"]
-
+    model = Consultas
+    list_display = ["paciente", "date", "type"]
+    icon_name = 'perm_contact_calendar'
     inlines = (
         PreOperatorioInline,
         PosOperatorioInline,
         ExameInline,
     )
 
-admin.site.register(Consulta, ConsultasAdmin)
+admin.site.register(Consultas, ConsultasAdmin)

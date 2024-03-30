@@ -1,8 +1,12 @@
 from django.db import models
-from multiselectfield import MultiSelectField
+from django import forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
+
 from datetime import date
 
 from registros.models import Cidade
+
+from pacientes.models import HorarioTrabalho
 
 class Paciente(models.Model):
 
@@ -21,13 +25,7 @@ class Paciente(models.Model):
 
     ocupation = models.CharField(max_length=255,verbose_name="Ocupação",null=False,blank=False,)
 
-    WORK_HOURS_CHOICES = [
-        ('morning', 'Manhã'),
-        ('afternoon', 'Tarde'),
-        ('evening', 'Noite'),
-    ]
-
-    work_hours = MultiSelectField(max_length=10,choices= WORK_HOURS_CHOICES,verbose_name="Horário de Trabalho")
+    work_hours = models.ManyToManyField(HorarioTrabalho, verbose_name="Horário de Trabalho", related_name='horarios', blank=False)
 
     cellphone_number = models.CharField(max_length=20, verbose_name="Telefone Celular",null=True,blank= True)
 

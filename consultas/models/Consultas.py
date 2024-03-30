@@ -16,6 +16,9 @@ class Consultas(models.Model):
       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = 'Consulta'
+        verbose_name_plural = 'Consultas'
 
     def __str__(self) -> str:
         return f"{self.paciente.full_name} - {self.created_at}"

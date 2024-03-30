@@ -9,8 +9,8 @@ SIM_NAO_CHOICES = (
 
 class RegistroBase(models.Model):
     TYPE_CHOICES = (
-        ('pre_op', 'Pré-operatório'),
-        ('pos_op', 'Pós-operatório'),
+        ('Pré-operatório', 'Pré-operatório'),
+        ('Pós-operatório', 'Pós-operatório'),
     )
 
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES, null=True, blank=True)
+    type = models.CharField(max_length=15, choices=TYPE_CHOICES, null=True, blank=True)

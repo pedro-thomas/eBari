@@ -6,7 +6,7 @@ class User (AbstractUser):
     pass
 
     class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
     def __str__(self):
         return self.get_full_name()
