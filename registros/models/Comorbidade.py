@@ -1,5 +1,4 @@
 from django.db import models
-from multiselectfield import MultiSelectField
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),

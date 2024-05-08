@@ -1,8 +1,5 @@
 from django.db import models
-from pacientes.models import Paciente
-from consultas.models.Consultas import Consultas
-from multiselectfield import MultiSelectField
-from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
+from consultas.models import Consultas, LocalRefeicao, TipoAlcool, QuemPrepara
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
@@ -12,20 +9,7 @@ SIM_NAO_CHOICES = (
 class FormBase(models.Model):
     consulta = models.OneToOneField(Consultas, on_delete=models.CASCADE, related_name='form_base')
 
-    MEAL_PLACE_CHOICES = (
-        ('Casa', 'Casa'),
-        ('Trabalho', 'Trabalho'),
-        ('Restaurante', 'Restaurante'),
-        ('Escola/Faculdade', 'Escola/Faculdade')
-    )
-
-    meal_place = MultiSelectField(
-        max_length = 255,
-        choices = MEAL_PLACE_CHOICES,
-        verbose_name = "Onde realiza refeições",
-        blank=False,
-        null= False
-    )
+    meal_place = models.ManyToManyField(LocalRefeicao, verbose_name="Onde realiza refeições", blank=False)
 
     tv_eating = models.BooleanField(
         choices = SIM_NAO_CHOICES,
@@ -231,19 +215,11 @@ class FormBase(models.Model):
         blank=False,
         null= False
     )
-
-    ALC_TYPE_CHOICES = (
-        ('cerveja', 'Cerveja'),
-        ('vinho', 'Vinho'),
-        ('destilado', 'Destilado / Cachaça'),
-        ('outros', 'Outros'),
-    )
     
-    alcoholic_type = MultiSelectField(
-        max_length=255,
-        choices = ALC_TYPE_CHOICES,
+    alcoholic_type = models.ManyToManyField(
+        TipoAlcool,
         verbose_name="Qual bebida",
-        blank=True,
+        blank=True
     )
 
     drink_qtd = models.FloatField(
@@ -478,17 +454,8 @@ class FormBase(models.Model):
         blank=True,
     )
 
-    WHO_PREPARES_FOOD = (
-    ('Você', 'Você'),
-    ('Funcionária', 'Funcionária'),
-    ('Parente', 'Parente'),
-    ('Restaurante', 'Restaurante'),
-    ('Delivery/Marmitex', 'Delivery/Marmitex'),
-    )
-
-    who_prepares = MultiSelectField(
-        max_length=255,
-        choices = WHO_PREPARES_FOOD,
+    who_prepares = models.ManyToManyField(
+        QuemPrepara,
         verbose_name="Quem prepara as refeições",
         blank=False,
     )

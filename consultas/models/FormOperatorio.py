@@ -1,10 +1,7 @@
 from typing import Any
 from django.db import models
-from pacientes.models import Paciente
-from multiselectfield import MultiSelectField
-from multiselectfield.utils import get_max_length
 
-from consultas.models import Consultas
+from consultas.models import Consultas, OrientacaoDieta, CausaGanhoPeso, Complicacoes
 from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
@@ -170,26 +167,10 @@ class PosOperatorio(models.Model):
         blank=False, verbose_name="Patologias atuais",
     )
 
-    COMPLICATIONS_CHOICES = (
-        ('não possui','Não possui'),
-        ('vomitos', 'Vômitos'),
-        ('contipacao intestinal', 'Constipação intestinal'),
-        ('entalamento', 'Entalamento'),
-        ('alopecia', 'Alopécia'),
-        ('halitose', 'Halitose'),
-        ('flatulencia', 'Flatulência'),
-        ('diarreia', 'Diarreia'),
-        ('sindome de dumping', 'Síndrome de Dumping'),
-        ('azia ou nauseas', 'Azia ou náuseas'),    
-        ('uma fraca/quebradica ','Unha fraca ou quebradiça')    
-    )
-
-    complications = MultiSelectField(
-        max_length = 255,
-        choices = COMPLICATIONS_CHOICES,
+    complications = models.ManyToManyField(
+        Complicacoes,
         verbose_name = "Sintomas gastrointestinais pós-cirurgicos",
-        blank=False,
-        null= False
+        blank=False
     )
 
     complications_obs = models.TextField(
@@ -245,19 +226,9 @@ class PreOperatorio(models.Model):
         null= False
     )
 
-    DIET_ORIENTATION_CHOICES = (
-        ('1', '1 - Eu mesmo(a)'),
-        ('2', '2 - Nutricionista'),
-        ('3', '3 - Médico'),
-        ('4', '4 - Amigos/Familiares'),
-        ('5', '5 - Coaching'),
-        ('6', '6 - Outros'),
-    )
-    
-    diet_orientation = MultiSelectField(
+    diet_orientation = models.ManyToManyField(
+            OrientacaoDieta,
             verbose_name="Quem orientou a dieta?",
-            choices=DIET_ORIENTATION_CHOICES,
-            max_length=get_max_length(DIET_ORIENTATION_CHOICES, None),
             blank=True,
     )  
 
@@ -266,17 +237,8 @@ class PreOperatorio(models.Model):
         blank=False,
     )  
 
-    WEIGHT_REASON_CHOICES = (
-        ('Gestação', 'Gestação'),
-        ('Genética', 'Genética'),
-        ('Hábitos de vida', 'Hábitos de vida'),
-        ('Patologia', 'Patologia'),
-        ('Casamento', 'Casamento')
-    )
-
-    weight_reason = MultiSelectField(
-        max_length=25,
-        choices= WEIGHT_REASON_CHOICES,
+    weight_reason = models.ManyToManyField(
+        CausaGanhoPeso,
         verbose_name="Causa do ganho de peso",
         blank=False,
     )
@@ -369,8 +331,3 @@ class PreOperatorio(models.Model):
 
     def __str__(self):
         return f"Detalhes Pré-Op para {self.consulta}"
-    
-    # def __init__(self, *args: Any, **kwargs: Any) -> None:
-    #     self.validators[0] = MaxValueMultiFieldValidator(self.max_length)
-
-    #     super().__init__(*args, **kwargs)

@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'consultas',
     'usuarios',
     'registros',
-
-    'multiselectfield',
 ]
 
 MIDDLEWARE = [

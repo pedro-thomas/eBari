@@ -11,6 +11,7 @@ class ContatoInline(admin.TabularInline):
     model = Contato
     extra = 0
 
+@admin.register(HorarioTrabalho)
 class HorarioTrabalhoAdmin(admin.ModelAdmin):
     model = HorarioTrabalho
     extra = 0
