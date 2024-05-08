@@ -1,7 +1,5 @@
 from django.db import models
 from pacientes.models import Paciente
-from multiselectfield import MultiSelectField
-from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),

@@ -262,7 +262,6 @@ class PreOperatorio(models.Model):
     )  
 
     weight_time = models.IntegerField(
-        max_length=25,
         verbose_name="Há quanto tempo apresenta excesso de peso?",
         blank=False,
     )  
