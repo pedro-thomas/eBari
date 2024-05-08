@@ -222,7 +222,7 @@ class PreOperatorio(models.Model):
     )
     type_diet = models.TextField(
             max_length=255,
-            verbose_name="Se sim, especifique",
+            verbose_name="Se Outros, especifique",
             blank=True,
     )
     diet_orientation = models.ManyToManyField(

@@ -1,10 +1,5 @@
 from django.db import models
 
-SIM_NAO_CHOICES = (
-    (True, 'Sim'),
-    (False, 'Não'),
-)
-
 class Remedio(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nome")
 

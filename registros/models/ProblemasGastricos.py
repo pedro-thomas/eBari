@@ -1,10 +1,11 @@
 from django.db import models
-
-SIM_NAO_CHOICES = (
-    (True, 'Sim'),
-    (False, 'Não'),
-)
-
+# Opções:
+# 1. Azia
+# 2. Gastrite
+# 3. Ulcera
+# 4. Constipação Intestinal
+# 5. Diarreia
+# 6. Refluxo
 class ProblemasGastricos(models.Model):
 
     name = models.CharField(max_length=255, verbose_name="Nome")

@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
 from consultas.models import Consultas
 from consultas.models import PosOperatorio, PreOperatorio
 from consultas.models import Exames
@@ -24,5 +26,12 @@ class ConsultasAdmin(admin.ModelAdmin):
         PosOperatorioInline,
         ExameInline,
     )
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super().get_fieldsets(request, obj=obj)
+        # Adicione o estilo CSS diretamente no HTML usando format_html
+        fieldsets_html = format_html('<style>.card-grid{{ display: block; }}</style>')
+        fieldsets = list(fieldsets)  # Converta para lista para poder modificar
+        fieldsets.append(('', {'fields': [], 'description': fieldsets_html}))
+        return fieldsets
 
 admin.site.register(Consultas, ConsultasAdmin)

@@ -6,4 +6,5 @@ from registros.admin.PatologiaAdmin import PatologiaAdmin
 from registros.admin.ProblemasGastricosAdmin import ProblemasGastricosAdmin
 from registros.admin.RegistroBaseAdmin import RegistroBaseAdmin
 from registros.admin.RemedioAdmin import RemedioAdmin
+from registros.admin.SuplementoAdmin import SuplementoAdmin
 from registros.admin.TecnicaCirurgicaAdmin import TecnicaCirurgicaAdmin

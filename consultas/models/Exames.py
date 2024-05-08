@@ -9,7 +9,7 @@ SIM_NAO_CHOICES = (
 
 class Exames(models.Model):
     consulta = models.OneToOneField(Consultas, on_delete=models.CASCADE, related_name='exams')
-    has_exam = models.BooleanField(default=False)
+    has_exam = models.BooleanField(default=False,verbose_name='Tem Exame?')
 
     hemoglobina = models.CharField(max_length=20, blank=True)
     hematocrito = models.CharField(max_length=20, blank=True)
