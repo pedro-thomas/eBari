@@ -1,5 +1,6 @@
 from django.db import models
-from consultas.models import Consultas, LocalRefeicao, TipoAlcool, QuemPrepara
+from consultas.models import Consultas, LocalRefeicao, TipoAlcool, QuemPrepara, TipoAtividade, MotivoAtividade
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
@@ -132,12 +133,26 @@ class FormBase(models.Model):
         null= False
     )
 
-    activity_type = models.CharField(
+    activity_type = models.ManyToManyField(
+        TipoAtividade,
+        verbose_name="Qual atividade?",
+        blank=True
+    )
+    activity_type_outro = models.CharField(
         max_length=255,
-        verbose_name="Qual atividade?/Se não qual o motivo?",
+        verbose_name="Se outra, especifique:",
         blank=True,
     )
-
+    activity_type_motivo = models.ManyToManyField(
+        MotivoAtividade,
+        verbose_name="Se não qual o motivo?",
+        blank=True
+    )
+    activity_type_motivo_outro = models.CharField(
+        max_length=255,
+        verbose_name="Se outro motivo, especifique:",
+        blank=True,
+    )
     ACTIVITY_FREQUENCY_CHOICES = (
         ('nao pratica', 'Não pratica'),
         ('1 vez por semana', '1 vez por semana'),
@@ -221,7 +236,11 @@ class FormBase(models.Model):
         verbose_name="Qual bebida",
         blank=True
     )
-
+    alcoholic_type_outro = models.CharField(
+        max_length=255,
+        verbose_name="Se outra bebida, especifique:",
+        blank=True,
+    )
     drink_qtd = models.FloatField(
         verbose_name="Quantidade (ml)",
         null=True,
@@ -255,6 +274,7 @@ class FormBase(models.Model):
 
     current_weight = models.FloatField(
         verbose_name="Peso atual",
+        validators=[MinValueValidator(60.0), MaxValueValidator(400.0)],
         null=True,
     )
 
@@ -295,8 +315,15 @@ class FormBase(models.Model):
         blank= True
     )
 
+    ESTADO_NUTRICIONAL_CHOICES = (
+        (1,'Obesidade grau I'),
+        (2,'Obesidade grau II'),
+        (3,'Obesidade grau III')
+    )
+    
     nutri_state = models.CharField(
-        max_length=255,
+        max_length=2,
+        choices=ESTADO_NUTRICIONAL_CHOICES,
         verbose_name="Estado nutricional",
         null=True,
     )
@@ -489,7 +516,7 @@ class FormBase(models.Model):
         verbose_name_plural = 'Formulários Bases'
 
     def __str__(self):
-        return f"Consulta de {self.paciente.full_name} em {Pacientete}"
+        return f"Consulta de {self.paciente.full_name} em {self.consulta.created_at}"
 
     soap_s = models.TextField(blank=True, verbose_name="S (Subjetivo)")
     soap_o = models.TextField(blank=True, verbose_name="O (Objetivo)")

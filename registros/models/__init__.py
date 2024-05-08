@@ -9,4 +9,5 @@ from registros.models.Patologia import Patologia
 from registros.models.ProblemasGastricos import ProblemasGastricos
 from registros.models.RegistroBase import RegistroBase
 from registros.models.Remedio import Remedio
+from registros.models.Suplemento import Suplemento
 from registros.models.TecnicaCirurgica import TecnicaCirurgica

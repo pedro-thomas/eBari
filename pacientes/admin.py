@@ -14,6 +14,7 @@ class ContatoInline(admin.TabularInline):
 @admin.register(HorarioTrabalho)
 class HorarioTrabalhoAdmin(admin.ModelAdmin):
     model = HorarioTrabalho
+    icon_name='access_time'
     extra = 0
 
 @admin.register(Paciente)

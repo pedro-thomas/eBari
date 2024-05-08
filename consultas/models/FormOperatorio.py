@@ -1,8 +1,8 @@
 from typing import Any
 from django.db import models
 
-from consultas.models import Consultas, OrientacaoDieta, CausaGanhoPeso, Complicacoes
-from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, TecnicaCirurgica, Patologia
+from consultas.models import Consultas, OrientacaoDieta, CausaGanhoPeso, Complicacoes, TipoDieta
+from registros.models import Comorbidade, ProblemasGastricos, Remedio, Medico, Suplemento, TecnicaCirurgica, Patologia
 
 SIM_NAO_CHOICES = (
     (True, 'Sim'),
@@ -150,6 +150,14 @@ class PosOperatorio(models.Model):
         blank = False,
     )
 
+    improved_comorb_before = models.BooleanField(
+        choices = SIM_NAO_CHOICES,
+        verbose_name="Possuía comorbidades antes da cirurgia?",
+        default=False,
+        blank=False,
+        null= False
+    )
+
     improved_comorb = models.BooleanField(
         choices = SIM_NAO_CHOICES,
         verbose_name="Comorbidades melhoraram pós cirurgia",
@@ -157,9 +165,12 @@ class PosOperatorio(models.Model):
         null= False
     )
 
-    improved_type = models.CharField(
-        max_length=255, null=True,
-        blank=True, verbose_name="Quais comorbidades melhoraram?",
+    improved_type = models.ManyToManyField(
+        Comorbidade,
+        verbose_name="Quais comorbidades melhoraram?",
+        max_length=255,
+        related_name='comorbidadesMelhoraram',
+        blank=True
     )
 
     current_pathology = models.ManyToManyField(
@@ -204,34 +215,26 @@ class PosOperatorio(models.Model):
 class PreOperatorio(models.Model):
     consulta = models.OneToOneField(Consultas, on_delete=models.CASCADE, related_name='preop')
 
-    DIET_CHOICES = (
-        ('0', '0 - Não fiz'),
-        ('1', '1 - Dietas da moda'),
-        ('2', '2 - Conta própria'),
-        ('3', '3 - Reeducação Alimentar'),
-        ('4', '4 - Shakes emagrecedores'),
-        ('5', '5 - Medicamento (Prescrição médica)'),
-        ('6', '6 - Automedicação (Sem prescrição médica)'),
-        ('7', '7 - Plano alimentar (Prescrição medica. Qual médico?)'),
-        ('8', '8 - Grupos de emgragrecimento (Com nutricionista)'),
-        ('9', '9 - Grupos de emagrecimento (Sem nutricionista)'),
-        ('10', '10 - Coach'),
-        ('11', '11 - Outros (Descreva abaixo)'),
-    )
-
-    do_diet = models.IntegerField(
-        choices= SIM_NAO_CHOICES,
+    do_diet = models.ManyToManyField(
+        TipoDieta,
         verbose_name="Fez algum tipo de dieta para perda de peso?",
-        blank=False,
-        null= False
+        blank=False
     )
-
+    type_diet = models.TextField(
+            max_length=255,
+            verbose_name="Se sim, especifique",
+            blank=True,
+    )
     diet_orientation = models.ManyToManyField(
             OrientacaoDieta,
             verbose_name="Quem orientou a dieta?",
             blank=True,
     )  
-
+    type_orientation = models.TextField(
+            max_length=255,
+            verbose_name="Se Outros, especifique",
+            blank=True,
+    )
     weight_time = models.IntegerField(
         verbose_name="Há quanto tempo apresenta excesso de peso?",
         blank=False,
@@ -255,6 +258,12 @@ class PreOperatorio(models.Model):
         blank = False,
     )
 
+    comorbidities_type_outro = models.CharField(
+        max_length=255,
+        verbose_name="Se outras, especifique:",
+        blank=True,
+    )
+
     stomach_problems = models.ManyToManyField(
         ProblemasGastricos,
         blank=False,
@@ -266,17 +275,10 @@ class PreOperatorio(models.Model):
         verbose_name="Consome medicamentos",
     )
 
-    sup_consumption = models.BooleanField(
-        choices = SIM_NAO_CHOICES,
+    sup_consumption = models.ManyToManyField(
+        Suplemento,
         verbose_name="Consome algum suplemento alimentar",
-        blank=False,
-        null= False,
-    )
-
-    sup_type = models.CharField(
-        max_length=255,
-        verbose_name="Se sim, qual suplemento",
-        blank=True,
+        blank=False
     )
 
     bari_security= models.BooleanField(
@@ -327,7 +329,7 @@ class PreOperatorio(models.Model):
 
     class Meta:
         verbose_name = 'Pré-Operatório'
-        verbose_name_plural = 'Pré-Operatórios'
+        verbose_name_plural = 'Histórico de Excesso de peso e tratamento'
 
     def __str__(self):
         return f"Detalhes Pré-Op para {self.consulta}"

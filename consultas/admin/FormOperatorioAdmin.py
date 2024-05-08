@@ -1,9 +1,16 @@
 from django.contrib import admin
 from consultas.models import PosOperatorio, PreOperatorio, OrientacaoDieta, CausaGanhoPeso, Complicacoes
 
-admin.site.register(OrientacaoDieta)
-admin.site.register(CausaGanhoPeso)
-admin.site.register(Complicacoes)
+class OrientacaoDietaAdmin(admin.ModelAdmin):
+  icon_name='record_voice_over'
+admin.site.register(OrientacaoDieta,OrientacaoDietaAdmin)
+class ComplicacoesAdmin(admin.ModelAdmin):
+  icon_name='mood_bad'
+admin.site.register(Complicacoes,ComplicacoesAdmin)
+
+class CausaGanhoPesoAdmin(admin.ModelAdmin):
+    icon_name='timeline'
+admin.site.register(CausaGanhoPeso,CausaGanhoPesoAdmin)
 
 class PreOperatorioAdmin(admin.ModelAdmin):
     list_display = ["consulta"]
